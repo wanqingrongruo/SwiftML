@@ -25,7 +25,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVision()
-
+        /// Input image to be classified as color (kCVPixelFormatType_32BGRA) image buffer, 299 pixels wide by 299 pixels high
+        // Inceptionv3 模型输入的图片 为 Image<RGB, 299, 299>
         let spec = VideoSpec(fps: 5, size: CGSize(width: 299, height: 299))
         videoCapture = VideoCapture(captureType: .back, preferredSpec: spec, previewContainer: previewView.layer)
         videoCapture.imageBufferHandler = { [weak self] imageBuffer in
@@ -44,6 +45,8 @@ class ViewController: UIViewController {
         self.isOpenVision.toggle()
     }
 
+
+    // CoreML 具有更好的性能
     func handleImageBufferWithCoreML(_ imageBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(imageBuffer), let resizeBuffer = resize(pixelBuffer: pixelBuffer) else { return }
         do {
@@ -59,6 +62,7 @@ class ViewController: UIViewController {
         }
     }
 
+    // Vision 可为 CoreML 提供 图片处理流程
     func handleImageBufferWithVision(_ imageBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(imageBuffer) else { return }
 
