@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     private var videoCapture: VideoCapture!
     private var requests = [VNRequest]()
 
+    private var isOpenVision = true
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVision()
@@ -28,15 +30,18 @@ class ViewController: UIViewController {
         videoCapture = VideoCapture(captureType: .back, preferredSpec: spec, previewContainer: previewView.layer)
         videoCapture.imageBufferHandler = { [weak self] imageBuffer in
             guard let `self` = self else { return }
-            DispatchQueue.main.async {
-                if self.visionSwitch.isOn {
-                    self.handleImageBufferWithVision(imageBuffer)
-                } else {
-                    self.handleImageBufferWithCoreML(imageBuffer)
-                }
+            if self.isOpenVision {
+                self.handleImageBufferWithVision(imageBuffer)
+            } else {
+                self.handleImageBufferWithCoreML(imageBuffer)
             }
-
         }
+
+        visionSwitch.addTarget(self, action: #selector(change(switcher:)), for: .touchUpInside)
+    }
+
+    @objc func change(switcher: UISwitch) {
+        self.isOpenVision.toggle()
     }
 
     func handleImageBufferWithCoreML(_ imageBuffer: CMSampleBuffer) {
@@ -45,7 +50,7 @@ class ViewController: UIViewController {
             let predition = try inceptionV3Model.prediction(image: resizeBuffer)
             DispatchQueue.main.async {
                 if let prob = predition.classLabelProbs[predition.classLabel] {
-                    self.predictResultLabel.text = String(format: "%@ %@", predition.classLabel, prob)
+                    self.predictResultLabel.text = "coreML: \(predition.classLabel) \(prob)"
                 }
             }
         }
