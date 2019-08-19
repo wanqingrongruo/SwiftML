@@ -34,16 +34,16 @@ class ViewController: UIViewController {
         setupVision()
         /// Input image to be classified as color (kCVPixelFormatType_32BGRA) image buffer, 299 pixels wide by 299 pixels high
         // Inceptionv3 模型输入的图片 为 Image<RGB, 299, 299>
-//        let spec = VideoSpec(fps: 5, size: CGSize(width: 299, height: 299))
-//        videoCapture = VideoCapture(captureType: .back, preferredSpec: spec, previewContainer: previewView.layer)
-//        videoCapture.imageBufferHandler = { [weak self] imageBuffer in
-//            guard let `self` = self else { return }
-//            if self.isOpenVision {
-//                self.handleImageBufferWithVision(imageBuffer)
-//            } else {
-//                self.handleImageBufferWithCoreML(imageBuffer)
-//            }
-//        }
+        let spec = VideoSpec(fps: 5, size: CGSize(width: 299, height: 299))
+        videoCapture = VideoCapture(captureType: .back, preferredSpec: spec, previewContainer: previewView.layer)
+        videoCapture.imageBufferHandler = { [weak self] imageBuffer in
+            guard let `self` = self else { return }
+            if self.isOpenVision {
+                self.handleImageBufferWithVision(imageBuffer)
+            } else {
+                self.handleImageBufferWithCoreML(imageBuffer)
+            }
+        }
 
         visionSwitch.addTarget(self, action: #selector(change(switcher:)), for: .touchUpInside)
     }

@@ -180,15 +180,17 @@ class SaliencyViewController: UIViewController {
 extension SaliencyViewController {
     // 语言识别
     func languageTagger() {
+        print("========语言识别==========")
         let tagger = NSLinguisticTagger(tagSchemes: [.language], options: 0)
         tagger.string = "王德发"
         if let language = tagger.dominantLanguage {
-            print("===当前是: \(language)")
+            print("当前语言: \(language)")
         }
     }
 
     // 切分
     func tokenization() {
+        print("========文本切分==========")
         let text = "机器学习是什么?"
         let tagger = NSLinguisticTagger(tagSchemes: [.tokenType], options: 0)
         tagger.string = text
@@ -200,12 +202,11 @@ extension SaliencyViewController {
             let token = (text as NSString).substring(with: tokenRange)
             print("====\(token)")
         }
-
-        print("========华丽分割线==========")
     }
 
     // 词性
     func partOfSpeech() {
+        print("========词性分析==========")
         let schemes = NSLinguisticTagger.availableTagSchemes(forLanguage: "en")
         let tagger = NSLinguisticTagger(tagSchemes: schemes, options: 0)
         let text = "My name is roni."
@@ -218,13 +219,11 @@ extension SaliencyViewController {
             let token = (text as NSString).substring(with: tokenRange)
             print(token + ": " + tag.rawValue)
         }
-
-        print("========华丽分割线==========")
-
     }
 
     // 词形还原
     func lemmatization() {
+        print("========词形还原==========")
         let tagger = NSLinguisticTagger(tagSchemes: [.lemma], options: 0)
         let text = "My name is roni."
         tagger.string = text
@@ -243,6 +242,7 @@ extension SaliencyViewController {
 
     // 实体识别
     func entityRecognzation() {
+        print("========实体识别==========")
         let schemes = NSLinguisticTagger.availableTagSchemes(forLanguage: "en")
         let tagger = NSLinguisticTagger(tagSchemes: schemes, options: 0)
         let text = "China is number one."
@@ -258,7 +258,6 @@ extension SaliencyViewController {
             let token = (text as NSString).substring(with: tokenRange)
             print(token + ": " + tag.rawValue)
         }
-        print("========华丽分割线==========")
     }
 }
 
