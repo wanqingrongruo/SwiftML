@@ -93,6 +93,8 @@ class ViewController: UIViewController {
             fatalError("can not load Vision ML Model")
         }
 
+        // Vision 可以接受 VNCoreMLModel, CVPixelBuffer, CIImage, CGIMage, Data, URL
+        // iOS 13 可以后 Vision 接受多个 image 入参, 能 自动将 图片 转成 CoreMLModel, 以合适的 Observation 类型输出
         let request = VNCoreMLRequest(model: visionModel) { (request, error) in
             guard let results = request.results else {
                 print("wtf")
