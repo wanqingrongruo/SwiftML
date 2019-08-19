@@ -200,6 +200,8 @@ extension SaliencyViewController {
             let token = (text as NSString).substring(with: tokenRange)
             print("====\(token)")
         }
+
+        print("========华丽分割线==========")
     }
 
     // 词性
@@ -217,6 +219,8 @@ extension SaliencyViewController {
             print(token + ": " + tag.rawValue)
         }
 
+        print("========华丽分割线==========")
+
     }
 
     // 词形还原
@@ -233,6 +237,8 @@ extension SaliencyViewController {
             }
             print(token + ": " + lemma)
         }
+
+        print("========华丽分割线==========")
     }
 
     // 实体识别
@@ -252,6 +258,7 @@ extension SaliencyViewController {
             let token = (text as NSString).substring(with: tokenRange)
             print(token + ": " + tag.rawValue)
         }
+        print("========华丽分割线==========")
     }
 }
 
