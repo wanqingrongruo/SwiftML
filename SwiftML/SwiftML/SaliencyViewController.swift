@@ -23,6 +23,12 @@ class SaliencyViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+
+        languageTagger()
+        tokenization()
+        partOfSpeech()
+        lemmatization()
+        entityRecognzation()
     }
 
     @IBAction func cleanAction(_ sender: Any) {
@@ -168,7 +174,85 @@ class SaliencyViewController: UIViewController {
     @IBAction func dismissAction(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+}
 
+// MARK: - NLP
+extension SaliencyViewController {
+    // 语言识别
+    func languageTagger() {
+        let tagger = NSLinguisticTagger(tagSchemes: [.language], options: 0)
+        tagger.string = "王德发"
+        if let language = tagger.dominantLanguage {
+            print("===当前是: \(language)")
+        }
+    }
+
+    // 切分
+    func tokenization() {
+        let text = "机器学习是什么?"
+        let tagger = NSLinguisticTagger(tagSchemes: [.tokenType], options: 0)
+        tagger.string = text
+
+        let range = NSRange(location: 0, length: text.utf16.count)
+        let options: NSLinguisticTagger.Options = [.omitPunctuation, .omitWhitespace]
+
+        tagger.enumerateTags(in: range, unit: .word, scheme: .tokenType, options: options) { tag, tokenRange, stop in
+            let token = (text as NSString).substring(with: tokenRange)
+            print("====\(token)")
+        }
+    }
+
+    // 词性
+    func partOfSpeech() {
+        let schemes = NSLinguisticTagger.availableTagSchemes(forLanguage: "en")
+        let tagger = NSLinguisticTagger(tagSchemes: schemes, options: 0)
+        let text = "My name is roni."
+        tagger.string = text
+        let range = NSRange(location: 0, length: text.utf16.count)
+
+        let options: NSLinguisticTagger.Options = [.omitPunctuation, .omitWhitespace]
+        tagger.enumerateTags(in: range, unit: .word, scheme: .nameTypeOrLexicalClass, options: options) { (tag, tokenRange, stop) in
+            guard let tag = tag else { return }
+            let token = (text as NSString).substring(with: tokenRange)
+            print(token + ": " + tag.rawValue)
+        }
+
+    }
+
+    // 词形还原
+    func lemmatization() {
+        let tagger = NSLinguisticTagger(tagSchemes: [.lemma], options: 0)
+        let text = "My name is roni."
+        tagger.string = text
+        let range = NSRange(location: 0, length: text.utf16.count)
+        let options: NSLinguisticTagger.Options = [.omitPunctuation, .omitWhitespace]
+        tagger.enumerateTags(in: range, unit: .word, scheme: .lemma, options: options) { (tag, tokenRange, stop) in
+            let token = (text as NSString).substring(with: tokenRange)
+            guard let lemma = tag?.rawValue, lemma != token else {
+                return
+            }
+            print(token + ": " + lemma)
+        }
+    }
+
+    // 实体识别
+    func entityRecognzation() {
+        let schemes = NSLinguisticTagger.availableTagSchemes(forLanguage: "en")
+        let tagger = NSLinguisticTagger(tagSchemes: schemes, options: 0)
+        let text = "China is number one."
+        tagger.string = text
+        let range = NSRange(location: 0, length: text.utf16.count)
+        let options: NSLinguisticTagger.Options = [.omitPunctuation, .omitWhitespace, .joinNames]
+
+        // 列举实体种类
+        let tags: [NSLinguisticTag] = [.personalName, .placeName, .organizationName, .number, .otherWord]
+
+        tagger.enumerateTags(in: range, unit: .word, scheme: .nameTypeOrLexicalClass, options: options) { (tag, tokenRange, stop) in
+            guard let tag = tag, tags.contains(tag) else { return }
+            let token = (text as NSString).substring(with: tokenRange)
+            print(token + ": " + tag.rawValue)
+        }
+    }
 }
 
 extension SaliencyViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
