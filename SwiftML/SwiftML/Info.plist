@@ -22,6 +22,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>王德发相机给我用一下?</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>王德发相册给我看一下</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

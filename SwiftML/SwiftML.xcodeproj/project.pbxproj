@@ -16,6 +16,7 @@
 		E00759E12306756C0008D474 /* SwiftMLUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00759E02306756C0008D474 /* SwiftMLUITests.swift */; };
 		E00759F02306812D0008D474 /* Inceptionv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = E00759EF2306812D0008D474 /* Inceptionv3.mlmodel */; };
 		E00759F22306827A0008D474 /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00759F12306827A0008D474 /* VideoCapture.swift */; };
+		E027A81A230A4A3600FC4964 /* SaliencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E027A819230A4A3500FC4964 /* SaliencyViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		E00759E22306756C0008D474 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E00759EF2306812D0008D474 /* Inceptionv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = Inceptionv3.mlmodel; path = SwiftML/Inceptionv3.mlmodel; sourceTree = SOURCE_ROOT; };
 		E00759F12306827A0008D474 /* VideoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
+		E027A819230A4A3500FC4964 /* SaliencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaliencyViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				E00759EE230681110008D474 /* MLModels */,
 				E00759C0230675690008D474 /* AppDelegate.swift */,
 				E00759C2230675690008D474 /* ViewController.swift */,
+				E027A819230A4A3500FC4964 /* SaliencyViewController.swift */,
 				E00759F12306827A0008D474 /* VideoCapture.swift */,
 				E00759C4230675690008D474 /* Main.storyboard */,
 				E00759C72306756C0008D474 /* Assets.xcassets */,
@@ -274,6 +277,7 @@
 				E00759C3230675690008D474 /* ViewController.swift in Sources */,
 				E00759F02306812D0008D474 /* Inceptionv3.mlmodel in Sources */,
 				E00759C1230675690008D474 /* AppDelegate.swift in Sources */,
+				E027A81A230A4A3600FC4964 /* SaliencyViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

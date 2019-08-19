@@ -21,6 +21,13 @@ class ViewController: UIViewController {
     private var requests = [VNRequest]()
 
     private var isOpenVision = true
+    @IBAction func presentAction(_ sender: Any) {
+        let saliencyViewController = SaliencyViewController()
+
+        DispatchQueue.main.async {
+            self.present(saliencyViewController, animated: true, completion: nil)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
