@@ -50,47 +50,47 @@ class SaliencyViewController: UIViewController {
 
     // iOS 13
     @IBAction func saliencyRecognize(_ sender: Any) {
-        guard let image = selectedImage else {
-            print("wdf, 没图片")
-            return
-        }
-
-        guard let ciImage = CIImage(image: image) else {
-            return
-        }
-
-        if #available(iOS 13.0, *) {
-            let faceRectanglesRequest = VNGenerateAttentionBasedSaliencyImageRequest { (request, error) in
-                guard error == nil else {
-                    print("\(error!.localizedDescription)")
-                    return
-                }
-
-                // 只有一个重点数据
-                guard let faceObservation = request.results?.first as? VNSaliencyImageObservation, let rect = faceObservation.salientObjects?.first else { return }
-
-                let faceRect = self.convertRect(with: rect.boundingBox, and: image)
-
-                let view = self.addRectangleView(rect: faceRect)
-                DispatchQueue.main.async {
-                    self.imageView.addSubview(view)
-                }
-            }
-
-            faceRectanglesRequest.revision = VNGenerateAttentionBasedSaliencyImageRequestRevision1
-
-            let requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
-
-            DispatchQueue.main.async {
-                do {
-                    try requestHandler.perform([faceRectanglesRequest])
-                } catch {
-                    print("\(error.localizedDescription)")
-                }
-            }
-        } else {
-            // Fallback on earlier versions
-        }
+//        guard let image = selectedImage else {
+//            print("wdf, 没图片")
+//            return
+//        }
+//
+//        guard let ciImage = CIImage(image: image) else {
+//            return
+//        }
+//
+//        if #available(iOS 13.0, *) {
+//            let faceRectanglesRequest = VNGenerateAttentionBasedSaliencyImageRequest { (request, error) in
+//                guard error == nil else {
+//                    print("\(error!.localizedDescription)")
+//                    return
+//                }
+//
+//                // 只有一个重点数据
+//                guard let faceObservation = request.results?.first as? VNSaliencyImageObservation, let rect = faceObservation.salientObjects?.first else { return }
+//
+//                let faceRect = self.convertRect(with: rect.boundingBox, and: image)
+//
+//                let view = self.addRectangleView(rect: faceRect)
+//                DispatchQueue.main.async {
+//                    self.imageView.addSubview(view)
+//                }
+//            }
+//
+//            faceRectanglesRequest.revision = VNGenerateAttentionBasedSaliencyImageRequestRevision1
+//
+//            let requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
+//
+//            DispatchQueue.main.async {
+//                do {
+//                    try requestHandler.perform([faceRectanglesRequest])
+//                } catch {
+//                    print("\(error.localizedDescription)")
+//                }
+//            }
+//        } else {
+//            // Fallback on earlier versions
+//        }
 
     }
     
